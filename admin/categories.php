@@ -19,6 +19,7 @@
                         <div class="col-sm-6">
                             
                         <?php
+                        //INSERT QUERY
                             if(isset($_POST['submit'])) {
                                 $cat_title = $_POST['cat_title'];
 
@@ -33,7 +34,6 @@
                                     }
                                 }
                             }
-                        
                         ?>
 
                         <form action="" method="post">
@@ -46,31 +46,13 @@
                             </div>
                         </form> <!-- Add Category Form -->
 
-                        <form action="" method="post">
-                            <div class="form-group">
-                                <label for="cat-title">Edit Category</label>
-                                
-                                <?php
-                                        //EDIT QUERY
-                                        if(isset($_GET['edit'])) {
-                                            $editing_cat_id = $_GET['edit'];
+                        <?php 
+                            if(isset($_GET['edit'])){
+                                $cat_id = $_GET['edit'];
+                                include "includes/update_categories.php";
+                            }
+                        ?>
 
-                                            $query = "SELECT * FROM categories WHERE cat_id = $editing_cat_id ";
-                                            $get_editing_id = mysqli_query($connection, $query);
-
-                                            while ($row = mysqli_fetch_assoc($get_editing_id)){
-                                                $cat_id = $row['cat_id'];
-                                                $cat_title = $row['cat_title'];
-                                                }
-                                    ?>
-                                            <input value="<?php if(isset($cat_title)){ echo $cat_title;} ?>" class="form-control" type="text" name="cat_title">
-                                    <?php } ?>
-
-                            </div>
-                            <div class="form-group">
-                                <input class="btn btn-primary" type="submit" name="submit" value="Update Category">
-                            </div>
-                        </form> <!-- Edit Category Form -->
                         </div> 
 
                         <div class="col-sm-6">
@@ -84,6 +66,7 @@
                                 </thead>
                                 <tbody>
                                     <tr>
+
                                         <?php
                                         //FIND ALL CATEGORIES QUERY
                                         $query = "SELECT * FROM categories";
@@ -99,7 +82,6 @@
                                             echo "<td><a href='categories.php?delete={$cat_id}'>Delete</a></td>";
                                             echo "</tr>";
                                             }
-                                        
                                         ?>
 
                                         <?php
@@ -111,14 +93,13 @@
                                             $delete_query = mysqli_query($connection, $query);
                                             header("Location: categories.php");
                                         }
-                                        
                                         ?>
+
                                     </tr>
                                 </tbody>
                             </table>
                         </div> <!-- Category Table -->
-                        
-                        
+
                     </div>
                 </div>
                 <!-- /.row -->
