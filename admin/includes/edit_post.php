@@ -55,7 +55,7 @@ $query = "SELECT * FROM posts";
         <input type="text" value="<?php if(isset($post_title)){ echo $post_title;} ?>" class="form-control" placeholder="Enter Post Title" name="post_title">
     </div>
     <div class="form-group">
-        <label for="post_category">Post Category Id </label>
+        <label for="post_category">Post Category</label>
         <select name="post_category" id="post_category" class="form-control">
             <?php
                 $query = "SELECT * FROM categories";

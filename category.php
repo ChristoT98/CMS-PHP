@@ -14,8 +14,12 @@
             <div class="col-md-8">
 
             <?php
+
+            if (isset($_GET['category'])) {
+                $post_category_id = $_GET['category'];
+            }
             
-            $query = "SELECT * FROM posts";
+            $query = "SELECT * FROM posts WHERE post_category_id = $post_category_id";
             $get_all_posts = mysqli_query($connection, $query);
 
             while ($row = mysqli_fetch_assoc($get_all_posts)){
