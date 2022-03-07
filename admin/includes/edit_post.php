@@ -19,6 +19,33 @@ $query = "SELECT * FROM posts";
                 $post_content = $row['post_content'];
                 $post_date = $row['post_date'];
             }
+            
+            if (isset($_POST['update_post'])) {
+                $post_title = $_POST['post_title'];
+                $post_author = $_POST['post_author'];
+                $post_category_id = $_POST['post_category'];
+                $post_status = $_POST['post_status'];
+                $post_image = $_FILES['post_image']['name'];
+                $post_image_temp = $_FILES['post_image']['tmp_name'];
+                $post_tags = $_POST['post_tags'];
+                $post_content = $_POST['post_content'];
+
+                move_uploaded_file($post_image_temp, "../images/$post_image");
+
+                if(empty($post_image)) { 
+                    $query = "SELECT * FROM posts WHERE post_id = $post_id";
+                    $get_image = mysqli_query($connection, $query);
+
+                    while($row = mysqli_fetch_array($get_image)) { 
+                        $post_image = $row['post_image'];
+                    }
+                }
+
+                $query = "UPDATE posts SET post_category_id = '{$post_category_id}', post_title = '{$post_title}', post_author = '{$post_author}', post_date = now(), post_image = '{$post_image}', post_content = '{$post_content}', post_tags = '{$post_tags}', post_comment_count = '{$post_comment_count}', post_status = '{$post_status}' WHERE post_id = '{$post_id}' ";
+                $update_post_query = mysqli_query($connection, $query);
+
+                confirmQuery($update_post_query);
+            }
 
 ?>
 
@@ -54,7 +81,9 @@ $query = "SELECT * FROM posts";
     </div>
     <div class="form-group">
         <label for="post_image">Post Image </label>
-        <img width="100" src="../images/<?php echo $post_image; ?>">
+        <img width="100" src="../images/<?php echo $post_image; ?>" alt="">
+        <br><br>
+        <input  type="file" name="post_image">
         
     </div>
     <div class="form-group">
@@ -67,6 +96,6 @@ $query = "SELECT * FROM posts";
     </div>
     
     <div class="form-group">
-        <input type="submit" class="btn btn-primary" name="create_post" value="Update Post">
+        <input type="submit" class="btn btn-primary" name="update_post" value="Update Post">
     </div>
 </form>
