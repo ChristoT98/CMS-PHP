@@ -34,7 +34,7 @@
                 echo "<tr>";
                 echo "<td>{$post_id}</td>";
                 echo "<td>{$post_author}</td>";
-                echo "<td>{$post_title}</td>";
+                echo "<td><a href='../post.php?p_id=$post_id'>$post_title</a></td>";
 
                 $query = "SELECT * FROM categories WHERE cat_id = $post_category_id ";
                 $get_selected_category_id = mysqli_query($connection, $query);
