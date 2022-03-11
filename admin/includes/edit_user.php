@@ -1,23 +1,21 @@
 <?php
 
-if (isset($_GET['p_id'])) {
-    $post_id = $_GET['p_id'];
+if (isset($_GET['u_id'])) {
+    $post_id = $_GET['u_id'];
 }
 
-$query = "SELECT * FROM posts";
-            $get_posts_by_id = mysqli_query($connection, $query);
+$query = "SELECT * FROM users";
+            $get_users_by_id = mysqli_query($connection, $query);
             
-            while ($row = mysqli_fetch_assoc($get_posts_by_id)){
-                $post_id = $row['post_id'];
-                $post_author = $row['post_author'];
-                $post_title = $row['post_title'];
-                $post_category_id = $row['post_category_id'];
-                $post_status = $row['post_status'];
-                $post_image = $row['post_image'];
-                $post_tags = $row['post_tags'];
-                $post_comment_count = $row['post_comment_count'];
-                $post_content = $row['post_content'];
-                $post_date = $row['post_date'];
+            while ($row = mysqli_fetch_assoc($get_users_by_id)){
+                $user_id = $row['user_id'];
+                $username = $row['username'];
+                $user_password = $row['user_password'];
+                $user_image = $row['user_image'];
+                $user_firstname = $row['user_firstname'];
+                $user_lastname = $row['user_lastname'];
+                $user_email = $row['user_email'];
+                $user_role = $row['user_role'];
             }
             
             if (isset($_POST['update_post'])) {
