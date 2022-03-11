@@ -54,23 +54,23 @@ $query = "SELECT * FROM posts";
         <label for="post_title">Post Title </label>
         <input type="text" value="<?php if(isset($post_title)){ echo $post_title;} ?>" class="form-control" placeholder="Enter Post Title" name="post_title">
     </div>
-    <div class="form-group">
-        <label for="post_category">Post Category</label>
-        <select name="post_category" id="post_category" class="form-control">
+    <!-- <div class="form-group">
+        <label for="user_role">User Role</label>
+        <select name="user_role" id="user_role" class="form-control">
             <?php
-                $query = "SELECT * FROM categories";
-                $get_all_categories = mysqli_query($connection, $query);
+                // $query = "SELECT * FROM users";
+                // $get_all_users = mysqli_query($connection, $query);
 
-                confirmQuery($get_all_categories);
+                // confirmQuery($get_all_users);
 
-                while ($row = mysqli_fetch_assoc($get_all_categories)){
-                    $cat_id = $row['cat_id'];
-                    $cat_title = $row['cat_title'];
-                    echo "<option value='{$cat_id}'>{$cat_title}</option>";
-                }
+                // while ($row = mysqli_fetch_assoc($get_all_users)){
+                //     $user_id = $row['user_id'];
+                //     $user_role = $row['user_role'];
+                //     echo "<option value='{$user_id}'>{$user_role}</option>";
+                // }
             ?>
         </select>
-    </div>
+    </div> -->
     <div class="form-group">
         <label for="post_author">Post Author </label>
         <input type="text" value="<?php if(isset($post_author)){ echo $post_author;} ?>" class="form-control" placeholder="Enter Post Author" name="post_author">
