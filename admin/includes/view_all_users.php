@@ -9,6 +9,7 @@
                 <th>Email</th>
                 <th>Role</th>
                 <!-- <th>Date</th> -->
+                <th>Change Role</th>
                 <th colspan="2" class="text-center">Modify</th>
             </tr>
         </thead>
@@ -58,6 +59,11 @@
 
                 echo "<td>{$user_role}</td>";
                 // echo "<td>{$user_created_date}</td>";
+                if($user_role == 'Admin'){
+                    echo "<td><a href='users.php?change_to_subscriber={$user_id}'>To Subscriber</a></td>";
+                }else {
+                    echo "<td><a href='users.php?change_to_admin={$user_id}'>To Admin</a></td>";
+                }
                 echo "<td><a href='users.php?edit={$user_id}'>Edit</a></td>";
                 echo "<td><a href='users.php?delete={$user_id}'>Delete</a></td>";
                 echo "</tr>";
@@ -69,21 +75,21 @@
 
 <?php
 
-// if (isset($_GET['approve'])) {
-//     $comment_id = $_GET['approve'];
+if (isset($_GET['change_to_admin'])) {
+    $user_id = $_GET['change_to_admin'];
 
-//     $query = "UPDATE comments SET comment_status = 'Approved' WHERE comment_id = $comment_id ";
-//     $approve_comment__query = mysqli_query($connection, $query);
-//     header("Location: comments.php");
-// }
+    $query = "UPDATE users SET user_role = 'Admin' WHERE user_id = $user_id ";
+    $change_to_admin_query = mysqli_query($connection, $query);
+    header("Location: users.php");
+}
 
-// if (isset($_GET['disapprove'])) {
-//     $comment_id = $_GET['disapprove'];
+if (isset($_GET['change_to_subscriber'])) {
+    $user_id = $_GET['change_to_subscriber'];
 
-//     $query = "UPDATE comments SET comment_status = 'Disapproved' WHERE comment_id = $comment_id ";
-//     $disapprove_comment__query = mysqli_query($connection, $query);
-//     header("Location: comments.php");
-// }
+    $query = "UPDATE users SET user_role = 'Subscriber' WHERE user_id = $user_id ";
+    $change_to_subscriber_query = mysqli_query($connection, $query);
+    header("Location: users.php");
+}
 
 if (isset($_GET['delete'])) {
     $user_id = $_GET['delete'];
