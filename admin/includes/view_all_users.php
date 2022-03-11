@@ -3,36 +3,38 @@
             <tr>
                 <th>ID</th>
                 <th>Username</th>
-                <th>Password</th>
+                <th>User Image</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
                 <th>Email</th>
-                <th>Status</th>
-                <th>In Response to</th>
-                <th>Date</th>
-                <th>Approve</th>
-                <th>Disapprove</th>
-                <th>Modify</th>
+                <th>Role</th>
+                <!-- <th>Date</th> -->
+                <th colspan="2" class="text-center">Modify</th>
             </tr>
         </thead>
         <tbody>
 
         <?php
             
-            $query = "SELECT * FROM comments";
-            $get_all_comments_query = mysqli_query($connection, $query);
+            $query = "SELECT * FROM users";
+            $get_all_users_query = mysqli_query($connection, $query);
             
-            while ($row = mysqli_fetch_assoc($get_all_comments_query)){
-                $comment_id = $row['comment_id'];
-                $comment_post_id = $row['comment_post_id'];
-                $comment_author = $row['comment_author'];
-                $comment_content = $row['comment_content'];
-                $comment_email = $row['comment_email'];
-                $comment_status = $row['comment_status'];
-                $comment_date = $row['comment_date'];
+            while ($row = mysqli_fetch_assoc($get_all_users_query)){
+                $user_id = $row['user_id'];
+                $username = $row['username'];
+                $user_password = $row['user_password'];
+                $user_image = $row['user_image'];
+                $user_firstname = $row['user_firstname'];
+                $user_lastname = $row['user_lastname'];
+                $user_email = $row['user_email'];
+                $user_role = $row['user_role'];
+                //$user_created_date = $row['user_created_date'];
 
                 echo "<tr>";
-                echo "<td>{$comment_id}</td>";
-                echo "<td>{$comment_author}</td>";
-                echo "<td>{$comment_content}</td>";
+                echo "<td>{$user_id}</td>";
+                echo "<td>{$username}</td>";
+                echo "<td><img width='64' src='../images/{$user_image}' alt='user image'/></td>";
+                echo "<td>{$user_firstname}</td>";
 
                 // $query = "SELECT * FROM posts WHERE post_id = $comment_post_id ";
                 // $get_post_comment_id = mysqli_query($connection, $query);
@@ -43,21 +45,21 @@
                 //     echo "<td>{$post_title}</td>";
                 // }
 
-                echo "<td>{$comment_email}</td>";
-                echo "<td class='text-center'>{$comment_status}</td>";
+                echo "<td>{$user_lastname}</td>";
+                echo "<td>{$user_email}</td>";
 
-                $query = "SELECT * FROM posts WHERE post_id = $comment_post_id";
-                $get_commented_post_query = mysqli_query($connection, $query);
-                while ($row = mysqli_fetch_assoc($get_commented_post_query)){
-                    $post_id = $row['post_id'];
-                    $post_title = $row['post_title'];
-                    echo "<td><a href='../post.php?p_id={$post_id}'>$post_title</a></td>";
-                }
+                // $query = "SELECT * FROM posts WHERE post_id = $comment_post_id";
+                // $get_commented_post_query = mysqli_query($connection, $query);
+                // while ($row = mysqli_fetch_assoc($get_commented_post_query)){
+                //     $post_id = $row['post_id'];
+                //     $post_title = $row['post_title'];
+                //     echo "<td><a href='../post.php?p_id={$post_id}'>$post_title</a></td>";
+                // }
 
-                echo "<td>{$comment_date}</td>";
-                echo "<td><a href='comments.php?approve={$comment_id}'>Approve</a></td>";
-                echo "<td><a href='comments.php?disapprove={$comment_id}'>Disapprove</a></td>";
-                echo "<td><a href='comments.php?delete={$comment_id}'>Delete</a></td>";
+                echo "<td>{$user_role}</td>";
+                // echo "<td>{$user_created_date}</td>";
+                echo "<td><a href='users.php?edit={$user_id}'>Edit</a></td>";
+                echo "<td><a href='users.php?delete={$user_id}'>Delete</a></td>";
                 echo "</tr>";
             }
         ?>
@@ -67,28 +69,28 @@
 
 <?php
 
-if (isset($_GET['approve'])) {
-    $comment_id = $_GET['approve'];
+// if (isset($_GET['approve'])) {
+//     $comment_id = $_GET['approve'];
 
-    $query = "UPDATE comments SET comment_status = 'Approved' WHERE comment_id = $comment_id ";
-    $approve_comment__query = mysqli_query($connection, $query);
-    header("Location: comments.php");
-}
+//     $query = "UPDATE comments SET comment_status = 'Approved' WHERE comment_id = $comment_id ";
+//     $approve_comment__query = mysqli_query($connection, $query);
+//     header("Location: comments.php");
+// }
 
-if (isset($_GET['disapprove'])) {
-    $comment_id = $_GET['disapprove'];
+// if (isset($_GET['disapprove'])) {
+//     $comment_id = $_GET['disapprove'];
 
-    $query = "UPDATE comments SET comment_status = 'Disapproved' WHERE comment_id = $comment_id ";
-    $disapprove_comment__query = mysqli_query($connection, $query);
-    header("Location: comments.php");
-}
+//     $query = "UPDATE comments SET comment_status = 'Disapproved' WHERE comment_id = $comment_id ";
+//     $disapprove_comment__query = mysqli_query($connection, $query);
+//     header("Location: comments.php");
+// }
 
 if (isset($_GET['delete'])) {
-    $comment_id = $_GET['delete'];
+    $user_id = $_GET['delete'];
 
-    $query = "DELETE FROM comments WHERE comment_id = {$comment_id} ";
+    $query = "DELETE FROM users WHERE user_id = {$user_id} ";
     $delete_query = mysqli_query($connection, $query);
-    header("Location: comments.php");
+    header("Location: users.php");
 }
 
 ?>
