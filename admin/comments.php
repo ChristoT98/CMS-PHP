@@ -26,11 +26,11 @@
 
                         switch($source){
                             case 'add_post';
-                            include "includes/add_post.php";
+                            include "";
                             break;
 
                             case 'edit_post';
-                            include "includes/edit_post.php";
+                            include "";
                             break;
 
                             default: include "includes/view_all_comments.php";
