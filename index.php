@@ -17,16 +17,20 @@
             
             $query = "SELECT * FROM posts";
             $get_all_posts = mysqli_query($connection, $query);
+            if (!mysqli_num_rows($get_all_posts)) {
+                echo "<h1 class='text-center'>No Posts Found!!</h1>";
+            } else {
+                while ($row = mysqli_fetch_assoc($get_all_posts)){
+                    $post_id = $row['post_id'];
+                    $post_title = $row['post_title'];
+                    $post_author = $row['post_author'];
+                    $post_date = $row['post_date'];
+                    $post_image = $row['post_image'];
+                    $post_content = substr($row['post_content'], 0,200);
+                    $post_status = $row['post_status'];
 
-            while ($row = mysqli_fetch_assoc($get_all_posts)){
-                $post_id = $row['post_id'];
-                $post_title = $row['post_title'];
-                $post_author = $row['post_author'];
-                $post_date = $row['post_date'];
-                $post_image = $row['post_image'];
-                $post_content = substr($row['post_content'], 0,200);
-
-            ?>
+                    if($post_status == 'Published') {
+                ?>
 
                 <h1 class="page-header">
                     Page Heading
@@ -48,9 +52,9 @@
                 <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
 
                 <hr>
-            
-            <?php } ?>
 
+                <?php } } } ?>
+    
             </div>
 
             <!-- Blog Sidebar Widgets Column -->
