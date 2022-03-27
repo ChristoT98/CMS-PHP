@@ -25,10 +25,10 @@
                         <input type="text" name="username" class="form-control" placeholder="Enter Username">
                     </div>
                     <div class="form-group">
-                        <input type="text" name="password" class="form-control" placeholder="Enter Password">
+                        <input type="password" name="password" class="form-control" placeholder="Enter Password">
                     </div>
                     <span style="padding: 1px">
-                        <button name="submit" style="float: right" class="btn btn-primary" type="submit">Login</button>
+                        <button name="login" style="float: right" class="btn btn-primary" type="submit">Login</button>
                     </span>
                     </form><!-- Login Form -->
                 </div>
