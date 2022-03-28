@@ -32,14 +32,16 @@
                                 </div>
                                 <div class="col-xs-9 text-right">
 
-                                <?php 
+                                    <?php 
                                 $query = "SELECT * FROM posts";
                                 $get_all_posts = mysqli_query($connection, $query);
                                 $post_count = mysqli_num_rows($get_all_posts);
                                 ?>
 
-                                    <div class='huge'><?php if(isset($post_count)){ echo $post_count;} ?></div>
-                                    <div>Posts</div>
+                                    <div class='huge'>
+                                        <?php if(isset($post_count)){ echo $post_count;} ?>
+                                    </div>
+                                    <div>All Posts</div>
                                 </div>
                             </div>
                         </div>
@@ -61,14 +63,16 @@
                                 </div>
                                 <div class="col-xs-9 text-right">
 
-                                <?php 
+                                    <?php 
                                 $query = "SELECT * FROM comments";
                                 $get_all_comments = mysqli_query($connection, $query);
                                 $comment_count = mysqli_num_rows($get_all_comments);
                                 ?>
 
-                                    <div class='huge'><?php if(isset($comment_count)){ echo $comment_count;} ?></div>
-                                    <div>Comments</div>
+                                    <div class='huge'>
+                                        <?php if(isset($comment_count)){ echo $comment_count;} ?>
+                                    </div>
+                                    <div>All Comments</div>
                                 </div>
                             </div>
                         </div>
@@ -90,14 +94,16 @@
                                 </div>
                                 <div class="col-xs-9 text-right">
 
-                                <?php 
+                                    <?php 
                                 $query = "SELECT * FROM users";
                                 $get_all_users = mysqli_query($connection, $query);
                                 $user_count = mysqli_num_rows($get_all_users);
                                 ?>
 
-                                    <div class='huge'><?php if(isset($user_count)){ echo $user_count;} ?></div>
-                                    <div> Users</div>
+                                    <div class='huge'>
+                                        <?php if(isset($user_count)){ echo $user_count;} ?>
+                                    </div>
+                                    <div>All Users</div>
                                 </div>
                             </div>
                         </div>
@@ -119,13 +125,15 @@
                                 </div>
                                 <div class="col-xs-9 text-right">
 
-                                <?php 
+                                    <?php 
                                 $query = "SELECT * FROM categories";
                                 $get_all_categories = mysqli_query($connection, $query);
                                 $category_count = mysqli_num_rows($get_all_categories);
                                 ?>
 
-                                    <div class='huge'><?php if(isset($category_count)){ echo $category_count;} ?></div>
+                                    <div class='huge'>
+                                        <?php if(isset($category_count)){ echo $category_count;} ?>
+                                    </div>
                                     <div>Categories</div>
                                 </div>
                             </div>
@@ -142,34 +150,72 @@
             </div>
             <!-- /.row -->
 
-            <div class="row">
-            <script type="text/javascript">
-      google.charts.load('current', {'packages':['bar']});
-      google.charts.setOnLoadCallback(drawChart);
 
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Year', 'Sales', 'Expenses', 'Profit'],
-          ['2014', 1000, 400, 200],
-          ['2015', 1170, 460, 250],
-          ['2016', 660, 1120, 300],
-          ['2017', 1030, 540, 350]
+            <?php
+
+            $query = "SELECT * FROM posts WHERE post_status = 'Published'";
+            $get_all_published_posts = mysqli_query($connection, $query);
+            $published_post_count = mysqli_num_rows($get_all_published_posts);
+            
+            $query = "SELECT * FROM posts WHERE post_status = 'Draft'";
+            $get_all_draft_posts = mysqli_query($connection, $query);
+            $draft_post_count = mysqli_num_rows($get_all_draft_posts);
+
+            $query = "SELECT * FROM comments WHERE comment_status = 'Approved'";
+            $get_all_approved_comments = mysqli_query($connection, $query);
+            $approved_comment_count = mysqli_num_rows($get_all_approved_comments);
+
+            $query = "SELECT * FROM comments WHERE comment_status = 'Disapproved'";
+            $get_all_disapproved_comments = mysqli_query($connection, $query);
+            $disapproved_comment_count = mysqli_num_rows($get_all_disapproved_comments);
+
+            $query = "SELECT * FROM comments WHERE comment_status = '----'";
+            $get_all_unapproved_comments = mysqli_query($connection, $query);
+            $unapproved_comment_count = mysqli_num_rows($get_all_unapproved_comments);
+
+            $query = "SELECT * FROM users WHERE user_role = 'Subscriber'";
+            $get_all_subscribers = mysqli_query($connection, $query);
+            $subscriber_count = mysqli_num_rows($get_all_subscribers);
+
+
+            ?>
+
+            <div class="row">
+                <script type="text/javascript">
+                    google.charts.load('current', { 'packages': ['bar'] });
+                    google.charts.setOnLoadCallback(drawChart);
+
+                    function drawChart() {
+                        var data = google.visualization.arrayToDataTable([
+                            ['Data', 'Count'],
+
+          <?php
+          
+          $chart_text = ['Published Posts', 'Draft Posts' , 'Approved Comments', 'Disapproved Comments', 'Unapproved Comments', 'Subscribers'];
+                        $chart_count = [$published_post_count, $draft_post_count, $approved_comment_count, $disapproved_comment_count, $unapproved_comment_count, $subscriber_count];
+
+                        for ($i = 0; $i < 6; $i++) {
+              echo "['{$chart_text[$i]}'". ",". "{$chart_count[$i]}],";
+                        }
+          
+          ?>
+
         ]);
 
-        var options = {
-          chart: {
-            title: 'Company Performance',
-            subtitle: 'Sales, Expenses, and Profit: 2014-2017',
-          }
-        };
+                        var options = {
+                            chart: {
+                                title: '',
+                                subtitle: '',
+                            }
+                        };
 
-        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+                        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
 
-        chart.draw(data, google.charts.Bar.convertOptions(options));
-      }
-    </script>
+                        chart.draw(data, google.charts.Bar.convertOptions(options));
+                    }
+                </script>
 
-<div id="columnchart_material" style="width: 800px; height: 500px;"></div>
+                <div id="columnchart_material" style="width: auto; height: 500px;"></div>
             </div>
 
         </div>
