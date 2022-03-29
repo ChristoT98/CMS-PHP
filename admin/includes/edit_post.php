@@ -76,9 +76,24 @@ $query = "SELECT * FROM posts WHERE post_id = $post_id";
         <input type="text" value="<?php if(isset($post_author)){ echo $post_author;} ?>" class="form-control" placeholder="Enter Post Author" name="post_author">
     </div>
     <div class="form-group">
+        <label for="post_status">Post Status</label>
+        <select name="post_status" id="post_status" class="form-control">
+        <option value='<?php echo $post_status; ?>'><?php echo $post_status; ?></option>
+            <?php
+                if($post_status == 'Published'){
+                    echo "<option value='Draft'>Draft</option>";
+
+                }else{
+                    echo "<option value='Published'>Publish</option>";
+                }
+            
+            ?>
+        </select>
+    </div>
+    <!-- <div class="form-group">
         <label for="post_status">Post Status </label>
         <input type="text" value="<?php if(isset($post_status)){ echo $post_status;} ?>" class="form-control" placeholder="Enter Post Status" name="post_status">
-    </div>
+    </div> -->
     <div class="form-group">
         <label for="post_image">Post Image </label>
         <img width="100" src="../images/<?php echo $post_image; ?>" alt="">
