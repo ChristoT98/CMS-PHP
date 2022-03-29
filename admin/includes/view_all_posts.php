@@ -1,4 +1,20 @@
+<form action="" method="POST">
 <table class="table table-striped table-bordered table-hover table-responsive">
+
+<div id="bulkOptionContainer" class="col-sm-4" style="margin-bottom: 10px;">
+    <select name="" id="" class="form-control">
+        <option value="">Select Option</option>
+        <option value="">Publish</option>
+        <option value="">Draft</option>
+        <option value="">Delete</option>
+    </select>
+</div>
+
+<div class="col-sm-4" style="margin-bottom: 10px;">
+    <input type="submit" class="btn btn-success" value="Apply">
+    <a class="btn btn-primary" href="posts.php?source=add_post">Add New</a>
+</div>
+
         <thead>
             <tr>
                 <th>ID</th>
@@ -58,6 +74,7 @@
 
     </tbody>
 </table>
+</form>
 
 <?php
 
