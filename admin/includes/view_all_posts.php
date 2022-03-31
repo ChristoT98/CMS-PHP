@@ -1,22 +1,58 @@
+<?php
+
+if (isset($_POST['checkBoxArray'])) {
+    foreach($_POST['checkBoxArray'] as $checkBoxValue) {
+        $bulk_options = $_POST['bulk_options'];
+
+        switch ($bulk_options) {
+            case 'Published': 
+                $query = "UPDATE posts SET post_status = '{$bulk_options}' WHERE post_id = {$checkBoxValue}";
+                $update_to_published_status = mysqli_query($connection, $query);
+
+                confirmQuery($update_to_published_status);
+                break;
+
+            case 'Draft': 
+                $query = "UPDATE posts SET post_status = '{$bulk_options}' WHERE post_id = {$checkBoxValue}";
+                $update_to_draft_status = mysqli_query($connection, $query);
+
+                confirmQuery($update_to_draft_status);
+                break;
+
+            case 'Deleted': 
+                $query = "DELETE FROM posts WHERE post_id = {$checkBoxValue}";
+                $update_to_delete_status = mysqli_query($connection, $query);
+
+                confirmQuery($update_to_delete_status);
+                break;
+
+        }
+
+    }
+}
+
+?>
+
 <form action="" method="POST">
 <table class="table table-striped table-bordered table-hover table-responsive">
 
-<div id="bulkOptionContainer" class="col-sm-4" style="margin-bottom: 10px;">
-    <select name="" id="" class="form-control">
+<div id="bulkOptionContainer" class="col-sm-4" style="padding: 0px; margin-bottom: 10px;">
+    <select name="bulk_options" id="" class="form-control">
         <option value="">Select Option</option>
-        <option value="">Publish</option>
-        <option value="">Draft</option>
-        <option value="">Delete</option>
+        <option value="Published">Publish</option>
+        <option value="Draft">Draft</option>
+        <option value="Deleted">Delete</option>
     </select>
 </div>
 
 <div class="col-sm-4" style="margin-bottom: 10px;">
-    <input type="submit" class="btn btn-success" value="Apply">
+    <input type="submit" name="submit" class="btn btn-success" value="Apply">
     <a class="btn btn-primary" href="posts.php?source=add_post">Add New</a>
 </div>
 
         <thead>
             <tr>
+                <th><input type="checkbox" id="selectAllCheckBoxes"></th>
                 <th>ID</th>
                 <th>Author</th>
                 <th>Title</th>
@@ -48,6 +84,12 @@
                 $post_date = $row['post_date'];
 
                 echo "<tr>";
+
+                ?>
+
+                <td><input type='checkbox' class='checkBoxes' name='checkBoxArray[]' value='<?php echo $post_id; ?>'></td>
+
+                <?php
                 echo "<td>{$post_id}</td>";
                 echo "<td>{$post_author}</td>";
                 echo "<td><a href='../post.php?p_id=$post_id'>$post_title</a></td>";
