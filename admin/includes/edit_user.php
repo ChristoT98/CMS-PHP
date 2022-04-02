@@ -39,7 +39,18 @@ $query = "SELECT * FROM users WHERE user_id = $user_id";
                 //     }
                 // }
 
-                $query = "UPDATE users SET user_firstname = '{$user_firstname}', user_lastname = '{$user_lastname}', user_email = '{$user_email}', username = '{$username}', user_password = '{$user_password}', user_role = '{$user_role}' WHERE user_id = '{$user_id}' ";
+        $query = "SELECT randSalt FROM users";
+        $get_randsalt = mysqli_query($connection, $query);
+
+        if (!$get_randsalt) {
+            die("QUERY FAILED" . mysqli_error($connection));
+        }
+
+        $row = mysqli_fetch_array($get_randsalt);
+        $salt = $row['randSalt'];
+        $hashed_password = crypt($user_password, $salt);
+
+                $query = "UPDATE users SET user_firstname = '{$user_firstname}', user_lastname = '{$user_lastname}', user_email = '{$user_email}', username = '{$username}', user_password = '{$hashed_password}', user_role = '{$user_role}' WHERE user_id = '{$user_id}' ";
                 $update_user_query = mysqli_query($connection, $query);
 
                 confirmQuery($update_user_query);
@@ -86,7 +97,7 @@ $query = "SELECT * FROM users WHERE user_id = $user_id";
     </div>
     <div class="form-group">
         <label for="user_password">Password </label>
-        <input type="text" value="<?php if(isset($user_password)){ echo $user_password;} ?>" class="form-control" name="user_password" placeholder="Enter New Password" name="user_password">
+        <input type="password" value="<?php if(isset($user_password)){ echo $user_password;} ?>" class="form-control" name="user_password" placeholder="Enter New Password" name="user_password">
     </div>
     
     <div class="form-group">

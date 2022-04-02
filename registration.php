@@ -27,7 +27,7 @@
      }
 
     $row = mysqli_fetch_array($get_randsalt);
-    echo $salt = $row['randSalt'];
+    $salt = $row['randSalt'];
     $password = crypt($password, $salt);
         
 
