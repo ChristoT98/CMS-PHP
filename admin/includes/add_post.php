@@ -19,6 +19,10 @@ if (isset($_POST['create_post'])) {
     $create_new_post = mysqli_query($connection, $query);
 
     confirmQuery($create_new_post);
+
+    $last_post_id = mysqli_insert_id($connection);
+
+    echo "<h3 class='bg-success'>New Post Created. <a href='../post.php?p_id={$last_post_id}'>View Post</a> or <a href='posts.php'>Edit More Posts</a></h3>";
 }
 
 ?>
